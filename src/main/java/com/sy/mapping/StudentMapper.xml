@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sy.dao.StudentMapper" >
+  <resultMap id="BaseResultMap" type="com.sy.pojo.Student" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="stuId" property="stuid" jdbcType="INTEGER" />
+    <result column="stuName" property="stuname" jdbcType="VARCHAR" />
+    <result column="stuPwd" property="stupwd" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="INTEGER" />
+    <result column="classId" property="classid" jdbcType="VARCHAR" />
+    <result column="faculty" property="faculty" jdbcType="VARCHAR" />
+    <result column="major" property="major" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, stuId, stuName, stuPwd, grade, classId, faculty, major
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByStuId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select * from student
+    where stuId = #{stuId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllStudent" resultMap="BaseResultMap">
+  select * from student ORDER BY classId
+  </select>
+  <select id="selectAllClassId" resultType="java.lang.String">
+    select DISTINCT(classId) from student
+  </select>
+  <select id="stuIdExist" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(1) as num from student
+    where stuId = #{stuId,jdbcType=INTEGER}
+  </select>
+  <select id="stuPwdExist" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(1) as num from student
+    where stuPwd = #{stuPwd,jdbcType=VARCHAR} and stuId = #{stuId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from student
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sy.pojo.Student" >
+    insert into student (id, stuId, stuName, 
+      stuPwd, grade, classId, 
+      faculty, major)
+    values (#{id,jdbcType=INTEGER}, #{stuid,jdbcType=INTEGER}, #{stuname,jdbcType=VARCHAR}, 
+      #{stupwd,jdbcType=VARCHAR}, #{grade,jdbcType=INTEGER}, #{classid,jdbcType=VARCHAR}, 
+      #{faculty,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sy.pojo.Student" >
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="stuid != null" >
+        stuId,
+      </if>
+      <if test="stuname != null" >
+        stuName,
+      </if>
+      <if test="stupwd != null" >
+        stuPwd,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="classid != null" >
+        classId,
+      </if>
+      <if test="faculty != null" >
+        faculty,
+      </if>
+      <if test="major != null" >
+        major,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="stuid != null" >
+        #{stuid,jdbcType=INTEGER},
+      </if>
+      <if test="stuname != null" >
+        #{stuname,jdbcType=VARCHAR},
+      </if>
+      <if test="stupwd != null" >
+        #{stupwd,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="classid != null" >
+        #{classid,jdbcType=VARCHAR},
+      </if>
+      <if test="faculty != null" >
+        #{faculty,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null" >
+        #{major,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sy.pojo.Student" >
+    update student
+    <set >
+      <if test="stuid != null" >
+        stuId = #{stuid,jdbcType=INTEGER},
+      </if>
+      <if test="stuname != null" >
+        stuName = #{stuname,jdbcType=VARCHAR},
+      </if>
+      <if test="stupwd != null" >
+        stuPwd = #{stupwd,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="classid != null" >
+        classId = #{classid,jdbcType=VARCHAR},
+      </if>
+      <if test="faculty != null" >
+        faculty = #{faculty,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null" >
+        major = #{major,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sy.pojo.Student" >
+    update student
+    set stuId = #{stuid,jdbcType=INTEGER},
+      stuName = #{stuname,jdbcType=VARCHAR},
+      stuPwd = #{stupwd,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=INTEGER},
+      classId = #{classid,jdbcType=VARCHAR},
+      faculty = #{faculty,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

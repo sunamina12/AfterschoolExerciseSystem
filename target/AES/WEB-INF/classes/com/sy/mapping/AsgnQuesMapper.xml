@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sy.dao.AsgnQuesMapper" >
+  <resultMap id="BaseResultMap" type="com.sy.pojo.AsgnQues" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="asgnId" property="asgnid" jdbcType="INTEGER" />
+    <result column="quesId" property="quesid" jdbcType="INTEGER" />
+    <result column="quesType" property="questype" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, asgnId, quesId, quesType
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from asgnques
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByAsgnid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT * FROM asgnques
+    WHERE asgnId = #{asgnId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from asgnques
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="delByAsgnId" parameterType="java.lang.Integer" >
+    delete from asgnques
+    where asgnid = #{asgnid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sy.pojo.AsgnQues" >
+    insert into asgnques (id, asgnId, quesId, 
+      quesType)
+    values (#{id,jdbcType=INTEGER}, #{asgnid,jdbcType=INTEGER}, #{quesid,jdbcType=INTEGER}, 
+      #{questype,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sy.pojo.AsgnQues" >
+    insert into asgnques
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="asgnid != null" >
+        asgnId,
+      </if>
+      <if test="quesid != null" >
+        quesId,
+      </if>
+      <if test="questype != null" >
+        quesType,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="asgnid != null" >
+        #{asgnid,jdbcType=INTEGER},
+      </if>
+      <if test="quesid != null" >
+        #{quesid,jdbcType=INTEGER},
+      </if>
+      <if test="questype != null" >
+        #{questype,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sy.pojo.AsgnQues" >
+    update asgnques
+    <set >
+      <if test="asgnid != null" >
+        asgnId = #{asgnid,jdbcType=INTEGER},
+      </if>
+      <if test="quesid != null" >
+        quesId = #{quesid,jdbcType=INTEGER},
+      </if>
+      <if test="questype != null" >
+        quesType = #{questype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sy.pojo.AsgnQues" >
+    update asgnques
+    set asgnId = #{asgnid,jdbcType=INTEGER},
+      quesId = #{quesid,jdbcType=INTEGER},
+      quesType = #{questype,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

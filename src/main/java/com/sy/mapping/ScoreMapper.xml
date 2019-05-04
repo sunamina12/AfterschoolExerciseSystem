@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sy.dao.ScoreMapper" >
+  <resultMap id="BaseResultMap" type="com.sy.pojo.Score" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="stuId" property="stuid" jdbcType="INTEGER" />
+    <result column="asgnId" property="asgnid" jdbcType="INTEGER" />
+    <result column="choCNum" property="chocnum" jdbcType="INTEGER" />
+    <result column="choTotal" property="chototal" jdbcType="INTEGER" />
+    <result column="blkCNum" property="blkcnum" jdbcType="INTEGER" />
+    <result column="blkTotal" property="blktotal" jdbcType="INTEGER" />
+    <result column="rate" property="rate" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, stuId, asgnId, choCNum, choTotal, blkCNum, blkTotal, rate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from score
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="asgnIfFinished" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(*) as num from score
+        where stuId = #{stuId,jdbcType=INTEGER} and asgnId = #{asgnId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByStuid" parameterType="java.lang.Integer"  resultMap="BaseResultMap" >
+        SELECT * FROM score
+        WHERE stuId = #{stuId,jdbcType=INTEGER}
+        ORDER BY asgnId
+    </select>
+    <select id="selectByAsgnid" parameterType="java.lang.Integer"  resultMap="BaseResultMap" >
+        SELECT * FROM score
+        WHERE asgnId = #{asgnId,jdbcType=INTEGER}
+        ORDER BY asgnId
+    </select>
+    <select id="selectAll"  resultMap="BaseResultMap" >
+        SELECT * FROM score order by asgnId
+    </select>
+  <insert id="insert" parameterType="com.sy.pojo.Score" >
+    insert into score (id, stuId, asgnId, choCNum, choTotal, blkCNum, blkTotal, rate)
+    values (#{id,jdbcType=INTEGER},
+            #{stuid,jdbcType=INTEGER},
+            #{asgnid,jdbcType=INTEGER},
+            #{chocnum,jdbcType=VARCHAR},
+            #{chototal,jdbcType=INTEGER},
+            #{blkcnum,jdbcType=INTEGER},
+            #{blktotal,jdbcType=INTEGER},
+            #{rate,jdbcType=INTEGER})
+  </insert>
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        DELETE FROM score
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+</mapper>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sy.dao.AssignmentMapper" >
+  <resultMap id="BaseResultMap" type="com.sy.pojo.Assignment" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="asgnId" property="asgnid" jdbcType="INTEGER" />
+    <result column="sbjt" property="sbjt" jdbcType="VARCHAR" />
+    <result column="topic" property="topic" jdbcType="VARCHAR" />
+    <result column="classId" property="classid" jdbcType="INTEGER" />
+    <result column="choNum" property="chonum" jdbcType="INTEGER" />
+    <result column="blkNum" property="blknum" jdbcType="INTEGER" />
+    <result column="asgnTime" property="asgntime" jdbcType="INTEGER" />
+    <result column="deadline" property="deadline" jdbcType="TIMESTAMP" />
+    <result column="uploader" property="uploader" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, asgnId, sbjt, topic, classId, choNum, blkNum, asgnTime, deadline, uploader
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from assignment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * FROM assignment
+  </select>
+  <select id="selectByUploader" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select * FROM assignment
+    where uploader = #{uploader,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByAsgnid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select * FROM assignment
+    where asgnId = #{asgnId,jdbcType=INTEGER}
+  </select>
+  <select id="asgnIdExist" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select count(*) FROM assignment
+    where asgnId = #{asgnId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAsgnByUploader" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * FROM assignment
+    where uploader = #{uploader,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByClassId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select * FROM assignment
+    where classId = #{classId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from assignment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sy.pojo.Assignment" >
+    insert into assignment (id, asgnId, sbjt, 
+      topic, classId, choNum, 
+      blkNum, asgnTime, deadline, 
+      uploader)
+    values (#{id,jdbcType=INTEGER}, #{asgnid,jdbcType=INTEGER}, #{sbjt,jdbcType=VARCHAR}, 
+      #{topic,jdbcType=VARCHAR}, #{classid,jdbcType=INTEGER}, #{chonum,jdbcType=INTEGER}, 
+      #{blknum,jdbcType=INTEGER}, #{asgntime,jdbcType=INTEGER}, #{deadline,jdbcType=TIMESTAMP}, 
+      #{uploader,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sy.pojo.Assignment" >
+    insert into assignment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="asgnid != null" >
+        asgnId,
+      </if>
+      <if test="sbjt != null" >
+        sbjt,
+      </if>
+      <if test="topic != null" >
+        topic,
+      </if>
+      <if test="classid != null" >
+        classId,
+      </if>
+      <if test="chonum != null" >
+        choNum,
+      </if>
+      <if test="blknum != null" >
+        blkNum,
+      </if>
+      <if test="asgntime != null" >
+        asgnTime,
+      </if>
+      <if test="deadline != null" >
+        deadline,
+      </if>
+      <if test="uploader != null" >
+        uploader,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="asgnid != null" >
+        #{asgnid,jdbcType=INTEGER},
+      </if>
+      <if test="sbjt != null" >
+        #{sbjt,jdbcType=VARCHAR},
+      </if>
+      <if test="topic != null" >
+        #{topic,jdbcType=VARCHAR},
+      </if>
+      <if test="classid != null" >
+        #{classid,jdbcType=INTEGER},
+      </if>
+      <if test="chonum != null" >
+        #{chonum,jdbcType=INTEGER},
+      </if>
+      <if test="blknum != null" >
+        #{blknum,jdbcType=INTEGER},
+      </if>
+      <if test="asgntime != null" >
+        #{asgntime,jdbcType=INTEGER},
+      </if>
+      <if test="deadline != null" >
+        #{deadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uploader != null" >
+        #{uploader,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sy.pojo.Assignment" >
+    update assignment
+    <set >
+      <if test="asgnid != null" >
+        asgnId = #{asgnid,jdbcType=INTEGER},
+      </if>
+      <if test="sbjt != null" >
+        sbjt = #{sbjt,jdbcType=VARCHAR},
+      </if>
+      <if test="topic != null" >
+        topic = #{topic,jdbcType=VARCHAR},
+      </if>
+      <if test="classid != null" >
+        classId = #{classid,jdbcType=INTEGER},
+      </if>
+      <if test="chonum != null" >
+        choNum = #{chonum,jdbcType=INTEGER},
+      </if>
+      <if test="blknum != null" >
+        blkNum = #{blknum,jdbcType=INTEGER},
+      </if>
+      <if test="asgntime != null" >
+        asgnTime = #{asgntime,jdbcType=INTEGER},
+      </if>
+      <if test="deadline != null" >
+        deadline = #{deadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uploader != null" >
+        uploader = #{uploader,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sy.pojo.Assignment" >
+    update assignment
+    set asgnId = #{asgnid,jdbcType=INTEGER},
+      sbjt = #{sbjt,jdbcType=VARCHAR},
+      topic = #{topic,jdbcType=VARCHAR},
+      classId = #{classid,jdbcType=INTEGER},
+      choNum = #{chonum,jdbcType=INTEGER},
+      blkNum = #{blknum,jdbcType=INTEGER},
+      asgnTime = #{asgntime,jdbcType=INTEGER},
+      deadline = #{deadline,jdbcType=TIMESTAMP},
+      uploader = #{uploader,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

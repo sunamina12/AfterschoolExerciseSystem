@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sy.dao.AdminMapper" >
+  <resultMap id="BaseResultMap" type="com.sy.pojo.Admin" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="adminId" property="adminid" jdbcType="INTEGER" />
+    <result column="adminName" property="adminname" jdbcType="VARCHAR" />
+    <result column="adminPwd" property="adminpwd" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, adminId, adminName, adminPwd
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByAdminId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from admin
+    where adminid = #{adminid,jdbcType=INTEGER}
+  </select>
+  <select id="adminIdExist" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(1) as num from admin
+    where adminId = #{adminId,jdbcType=INTEGER}
+  </select>
+  <select id="adminPwdExist" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(1) as num from admin
+    where adminPwd = #{adminPwd,jdbcType=VARCHAR} and adminId = #{adminId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from admin
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sy.pojo.Admin" >
+    insert into admin (id, adminId, adminName, 
+      adminPwd)
+    values (#{id,jdbcType=INTEGER}, #{adminid,jdbcType=INTEGER}, #{adminname,jdbcType=VARCHAR}, 
+      #{adminpwd,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sy.pojo.Admin" >
+    insert into admin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="adminid != null" >
+        adminId,
+      </if>
+      <if test="adminname != null" >
+        adminName,
+      </if>
+      <if test="adminpwd != null" >
+        adminPwd,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="adminid != null" >
+        #{adminid,jdbcType=INTEGER},
+      </if>
+      <if test="adminname != null" >
+        #{adminname,jdbcType=VARCHAR},
+      </if>
+      <if test="adminpwd != null" >
+        #{adminpwd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sy.pojo.Admin" >
+    update admin
+    <set >
+      <if test="adminid != null" >
+        adminId = #{adminid,jdbcType=INTEGER},
+      </if>
+      <if test="adminname != null" >
+        adminName = #{adminname,jdbcType=VARCHAR},
+      </if>
+      <if test="adminpwd != null" >
+        adminPwd = #{adminpwd,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sy.pojo.Admin" >
+    update admin
+    set adminId = #{adminid,jdbcType=INTEGER},
+      adminName = #{adminname,jdbcType=VARCHAR},
+      adminPwd = #{adminpwd,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript">
+        function checkPass() {
+            var pwd1 = document.getElementById("p1").value;
+            var pwd2 = document.getElementById("p2").value;
+            if (pwd1 != pwd2) {
+                document.getElementById("errorpwd").style.display = "block";
+                return false;
+            }else{
+                document.getElementById("errorpwd").style.display = "none";
+                return true;
+            }
+        }
+    </script>
+</head>
+<body>
+输入密码：<input type="password" id="p1"><br>
+重复密码：<input type="password" id="p2" onblur="return checkPass();">
+<span id="errorpwd" style="display:none;"><font color='red'>两次输入密码不一致</font></span>
+</body>
+</html>

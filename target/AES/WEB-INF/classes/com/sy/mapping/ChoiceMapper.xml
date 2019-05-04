@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sy.dao.ChoiceMapper" >
+  <resultMap id="BaseResultMap" type="com.sy.pojo.Choice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="choId" property="choid" jdbcType="INTEGER" />
+    <result column="stem" property="stem" jdbcType="VARCHAR" />
+    <result column="option1" property="option1" jdbcType="VARCHAR" />
+    <result column="option2" property="option2" jdbcType="VARCHAR" />
+    <result column="option3" property="option3" jdbcType="VARCHAR" />
+    <result column="option4" property="option4" jdbcType="VARCHAR" />
+    <result column="answer" property="answer" jdbcType="VARCHAR" />
+    <result column="sbjt" property="sbjt" jdbcType="VARCHAR" />
+    <result column="topic" property="topic" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, choId, stem, option1, option2, option3, option4, answer, sbjt, topic
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from choice
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectTopicBySbjt" resultType="java.lang.String" parameterType="java.lang.String" >
+    select DISTINCT(topic) from choice
+    where sbjt = #{sbjt,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from choice
+  </select>
+  <select id="selectByST" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select * from choice
+    WHERE sbjt = #{sbjt,jdbcType=VARCHAR} AND topic = #{topic,jdbcType=VARCHAR}
+  </select>
+  <select id="selectIdByST" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select id from choice
+    WHERE sbjt = #{0} AND topic = #{1}
+  </select>
+  <select id="selectQuanByTopic" resultType="java.lang.Integer" parameterType="java.lang.String">
+    SELECT COUNT(*) as num FROM choice
+    WHERE sbjt = #{0} AND topic = #{1}
+  </select>
+  <select id="choStemExist" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) as num from choice
+    where stem = #{stem,jdbcType=VARCHAR}
+  </select>
+  <select id="getQuantity" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) as num from choice
+  </select>
+  <select id="selectMaxId" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select max(choid) from choice
+  </select>
+  <select id="selectNum" resultMap="BaseResultMap">
+    select id from choice
+  </select>
+  <select id="selectAllSbjt" resultType="java.lang.String">
+    select DISTINCT(sbjt) from choice
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from choice
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.sy.pojo.Choice" >
+    insert into choice (id, choId, stem, 
+      option1, option2, option3, 
+      option4, answer, sbjt, 
+      topic)
+    values (#{id,jdbcType=INTEGER}, #{choid,jdbcType=INTEGER}, #{stem,jdbcType=VARCHAR}, 
+      #{option1,jdbcType=VARCHAR}, #{option2,jdbcType=VARCHAR}, #{option3,jdbcType=VARCHAR}, 
+      #{option4,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, #{sbjt,jdbcType=VARCHAR}, 
+      #{topic,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sy.pojo.Choice" >
+    insert into choice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="choid != null" >
+        choId,
+      </if>
+      <if test="stem != null" >
+        stem,
+      </if>
+      <if test="option1 != null" >
+        option1,
+      </if>
+      <if test="option2 != null" >
+        option2,
+      </if>
+      <if test="option3 != null" >
+        option3,
+      </if>
+      <if test="option4 != null" >
+        option4,
+      </if>
+      <if test="answer != null" >
+        answer,
+      </if>
+      <if test="sbjt != null" >
+        sbjt,
+      </if>
+      <if test="topic != null" >
+        topic,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="choid != null" >
+        #{choid,jdbcType=INTEGER},
+      </if>
+      <if test="stem != null" >
+        #{stem,jdbcType=VARCHAR},
+      </if>
+      <if test="option1 != null" >
+        #{option1,jdbcType=VARCHAR},
+      </if>
+      <if test="option2 != null" >
+        #{option2,jdbcType=VARCHAR},
+      </if>
+      <if test="option3 != null" >
+        #{option3,jdbcType=VARCHAR},
+      </if>
+      <if test="option4 != null" >
+        #{option4,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="sbjt != null" >
+        #{sbjt,jdbcType=VARCHAR},
+      </if>
+      <if test="topic != null" >
+        #{topic,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sy.pojo.Choice" >
+    update choice
+    <set >
+      <if test="choid != null" >
+        choId = #{choid,jdbcType=INTEGER},
+      </if>
+      <if test="stem != null" >
+        stem = #{stem,jdbcType=VARCHAR},
+      </if>
+      <if test="option1 != null" >
+        option1 = #{option1,jdbcType=VARCHAR},
+      </if>
+      <if test="option2 != null" >
+        option2 = #{option2,jdbcType=VARCHAR},
+      </if>
+      <if test="option3 != null" >
+        option3 = #{option3,jdbcType=VARCHAR},
+      </if>
+      <if test="option4 != null" >
+        option4 = #{option4,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="sbjt != null" >
+        sbjt = #{sbjt,jdbcType=VARCHAR},
+      </if>
+      <if test="topic != null" >
+        topic = #{topic,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sy.pojo.Choice" >
+    update choice
+    set choId = #{choid,jdbcType=INTEGER},
+      stem = #{stem,jdbcType=VARCHAR},
+      option1 = #{option1,jdbcType=VARCHAR},
+      option2 = #{option2,jdbcType=VARCHAR},
+      option3 = #{option3,jdbcType=VARCHAR},
+      option4 = #{option4,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=VARCHAR},
+      sbjt = #{sbjt,jdbcType=VARCHAR},
+      topic = #{topic,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<BODY>
+<form action="login/register/registerCon" method="post">
+    <table>
+        <tr>
+            <td>用户名</td>
+            <td>
+                <input type="text" size="20" name="id">
+            </td>
+        </tr>
+        <tr>
+            <td>密码</td>
+            <td>
+                <input type="password" size="20" name="pwd1" id="pwd1">
+            </td>
+        </tr>
+        <tr>
+            <td>重复密码</td>
+            <td>
+                <input type="password" size="20" style="float:left" name="pwd2" id="pwd2" onblur="return checkPass();">
+                <span id="errorpwd" style="display:none;float:left;"><font color='red'>两次输入密码不一致</font></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit">注册</button>
+            </td>
+            <td>
+                <button type="reset">重置</button>
+            </td>
+        </tr>
+    </table>
+</form>
+</BODY>
+<script type="text/javascript">
+    function checkPass() {
+        var pwd1 = document.getElementById("pwd1").value;
+        var pwd2 = document.getElementById("pwd2").value;
+        if (pwd1 != pwd2) {
+            document.getElementById("errorpwd").style.display = "block";
+            return false;
+        }else{
+            document.getElementById("errorpwd").style.display = "none";
+            return true;
+        }
+    }
+</script>
+</html>

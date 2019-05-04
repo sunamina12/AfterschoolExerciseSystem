@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sy.dao.TeacherMapper" >
+  <resultMap id="BaseResultMap" type="com.sy.pojo.Teacher" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="tchId" property="tchid" jdbcType="INTEGER" />
+    <result column="tchName" property="tchname" jdbcType="VARCHAR" />
+    <result column="tchPwd" property="tchpwd" jdbcType="VARCHAR" />
+    <result column="faculty" property="faculty" jdbcType="VARCHAR" />
+    <result column="major" property="major" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, tchId, tchName, tchPwd, faculty, major
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from teacher
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByTchId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from teacher
+    where tchid = #{tchid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllTeacher" resultMap="BaseResultMap">
+    select * from teacher ORDER BY tchId
+  </select>
+  <select id="tchIdExist" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(1) as num from teacher
+    where tchId = #{tchId,jdbcType=INTEGER}
+  </select>
+  <select id="tchPwdExist" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(1) as num from teacher
+    where tchPwd = #{tchPwd,jdbcType=VARCHAR} and tchId = #{tchId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from teacher
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sy.pojo.Teacher" >
+    insert into teacher (id, tchId, tchName, 
+      tchPwd, faculty, major
+      )
+    values (#{id,jdbcType=INTEGER}, #{tchid,jdbcType=INTEGER}, #{tchname,jdbcType=VARCHAR}, 
+      #{tchpwd,jdbcType=VARCHAR}, #{faculty,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sy.pojo.Teacher" >
+    insert into teacher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tchid != null" >
+        tchId,
+      </if>
+      <if test="tchname != null" >
+        tchName,
+      </if>
+      <if test="tchpwd != null" >
+        tchPwd,
+      </if>
+      <if test="faculty != null" >
+        faculty,
+      </if>
+      <if test="major != null" >
+        major,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tchid != null" >
+        #{tchid,jdbcType=INTEGER},
+      </if>
+      <if test="tchname != null" >
+        #{tchname,jdbcType=VARCHAR},
+      </if>
+      <if test="tchpwd != null" >
+        #{tchpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="faculty != null" >
+        #{faculty,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null" >
+        #{major,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sy.pojo.Teacher" >
+    update teacher
+    <set >
+      <if test="tchid != null" >
+        tchId = #{tchid,jdbcType=INTEGER},
+      </if>
+      <if test="tchname != null" >
+        tchName = #{tchname,jdbcType=VARCHAR},
+      </if>
+      <if test="tchpwd != null" >
+        tchPwd = #{tchpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="faculty != null" >
+        faculty = #{faculty,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null" >
+        major = #{major,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sy.pojo.Teacher" >
+    update teacher
+    set tchId = #{tchid,jdbcType=INTEGER},
+      tchName = #{tchname,jdbcType=VARCHAR},
+      tchPwd = #{tchpwd,jdbcType=VARCHAR},
+      faculty = #{faculty,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
